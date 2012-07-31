@@ -42,6 +42,7 @@ SchedScene::SchedScene(task_t *task, perm_t *perm, sched_t *sched, QObject *pare
         items_[i]->setPos(sched->operator[](i), 0);
 
         addItem(items_[i]);
+        items_[i]->updateData(getItemWidth(i));
     }
 
     marker->setPos(0, 0);
@@ -92,12 +93,10 @@ void SchedScene::clickItem(size_t id)
 
 void SchedScene::swapItems(size_t i, size_t j)
 {
-    const size_t job_i = i;//item2job(i);
-    const size_t job_j = j;//item2job(j);
-    std::swap((*perm_)[job_i], (*perm_)[job_j]);
+    std::swap((*perm_)[i], (*perm_)[j]);
 
-    items_[i]->updateData();
-    items_[j]->updateData();
+    items_[i]->updateData(getItemWidth(i));
+    items_[j]->updateData(getItemWidth(j));
 
     updateItems();
 
@@ -107,13 +106,17 @@ void SchedScene::swapItems(size_t i, size_t j)
 void SchedScene::selectItem(size_t i)
 {
     selected_.reset(i);
-    items_[i]->updateData();
+    invalidate(items_[i]->boundingRect());
+    //items_[i]->updateData();
 }
 
 void SchedScene::deselectItem()
 {
     if (selected_.is_initialized())
-        items_[*selected_]->updateData();
+    {
+        invalidate(items_[*selected_]->boundingRect());
+        //items_[*selected_]->updateData();
+    }
 
     selected_.reset();
 }
@@ -150,6 +153,17 @@ size_t SchedScene::item2job(size_t item) const
 size_t SchedScene::job2item(size_t job) const
 {
     return (std::find(perm_->begin(), perm_->end(), job) - perm_->begin());
+}
+
+qreal SchedScene::getItemWidth(size_t i) const
+{
+    if (i < task_->size() - 1)
+    {
+        const size_t job_i = (*perm_)[i];
+        const size_t next_job = (*perm_)[i + 1];
+        return (*task_)[job_i].spans[next_job];
+    }
+    return 20; // FIXME!
 }
 
 void SchedScene::updateItems()

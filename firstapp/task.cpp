@@ -10,7 +10,8 @@ void perm2sched(const task_t &task, const perm_t &perm, sched_t &out)
     for (size_t i = 0; i < task.size(); ++i)
     {
         out[perm[i]] = last;
-        last += task[perm[i]].proc;
+        if (i < task.size() - 1)
+            last += task[perm[i]].spans[perm[i + 1]];
     }
 }
 

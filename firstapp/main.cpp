@@ -6,14 +6,17 @@
 
 int main(int argc, char *argv[])
 {
-    const size_t N = 4;
+    const size_t N = 7;
     task_t task(N);
     perm_t perm(N);
     sched_t sched(N);
 
     for (size_t i = 0; i < N; ++i)
     {
-        task[i].proc = 60;//(i + 1) * 40;
+        task[i].spans.resize(N);
+        std::fill(task[i].spans.begin(), task[i].spans.end(), 60);
+
+        //task[i].proc = 60;//(i + 1) * 40;
         task[i].tweight = (i + 1) * 20;
         task[i].due = 0;
 

@@ -7,7 +7,7 @@ typedef float cost_t;
 struct job_t
 {
     moment_t due;
-    moment_t proc;
+    vector<moment_t> spans;
     cost_t tweight;
 };
 

@@ -6,6 +6,7 @@
 SchedItem::SchedItem(SchedScene *scene, size_t id)
     : scene_(scene)
     , id_(id)
+    , width_(0)
 
     , is_dragged_(false)
 {
@@ -16,7 +17,7 @@ QRectF SchedItem::boundingRect() const
 {
     size_t real_id = (*scene_->perm_)[id_];
     const task_t& task = *(scene_->task_);
-    return QRectF(0, 0, task[real_id].proc, task[real_id].tweight);
+    return QRectF(0, 0, width_, task[real_id].tweight);
 }
 
 void SchedItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -38,8 +39,9 @@ void SchedItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 }
 
-void SchedItem::updateData()
+void SchedItem::updateData(qreal proc)
 {
+    width_ = proc;
     prepareGeometryChange();
 }
 
