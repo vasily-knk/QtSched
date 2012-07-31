@@ -86,7 +86,7 @@ void SchedScene::clickItem(size_t id)
     else
     {
         swapItems(*selected_, id);
-        selectItem(id);
+        deselectItem();
     }
 }
 
@@ -100,6 +100,8 @@ void SchedScene::swapItems(size_t i, size_t j)
     items_[j]->updateData();
 
     updateItems();
+
+    qDebug() << "Cost: " << get_cost(*task_, *sched_);
 }
 
 void SchedScene::selectItem(size_t i)

@@ -80,12 +80,10 @@ void SchedItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void SchedItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    qDebug() << "Enter " << id_;
     scene_->showTRect(id_);
 }
 
 void SchedItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    qDebug() << "Leave " << id_;
     scene_->hideTRect();
 }

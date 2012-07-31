@@ -21,6 +21,6 @@ typedef vector<moment_t> sched_t;
 
 
 void perm2sched(const task_t &task, const perm_t &perm, sched_t &out);
-
+cost_t get_cost(const task_t &task, const sched_t &sched);
 
 #endif // TASK_H

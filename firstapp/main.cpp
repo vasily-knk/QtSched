@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; i < N; ++i)
     {
-        task[i].proc = (i + 1) * 40;
+        task[i].proc = 60;//(i + 1) * 40;
         task[i].tweight = (i + 1) * 20;
-        task[i].due = -20;
+        task[i].due = 0;
 
         perm[i] = i;
     }

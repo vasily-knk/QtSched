@@ -13,3 +13,16 @@ void perm2sched(const task_t &task, const perm_t &perm, sched_t &out)
         last += task[perm[i]].proc;
     }
 }
+
+cost_t get_cost(const task_t &task, const sched_t &sched)
+{
+    assert (task.size() == sched.size());
+
+    cost_t cost = 0;
+    for (size_t i = 0; i < task.size(); ++i)
+    {
+        const moment_t tardiness = std::max<moment_t>(sched[i] - task[i].due, 0);
+        cost += task[i].tweight * tardiness;
+    }
+    return cost;
+}
