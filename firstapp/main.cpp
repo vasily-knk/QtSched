@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     {
         task[i].proc = (i + 1) * 40;
         task[i].tweight = (i + 1) * 20;
+        task[i].due = -20;
 
         perm[i] = i;
     }

@@ -119,8 +119,17 @@ void SchedScene::deselectItem()
 void SchedScene::showTRect(size_t item)
 {
     const size_t job = item2job(item);
-    tRect_->setRect(0, 0, (*sched_)[job], (*task_)[job].tweight);
-    tRect_->setVisible(true);
+
+    moment_t tardiness = (*sched_)[job] - (*task_)[job].due;
+
+    if (tardiness > 0)
+    {
+        tRect_->setRect((*task_)[job].due, 0, tardiness, (*task_)[job].tweight);
+        tRect_->setVisible(true);
+    }
+    else
+        tRect_->setVisible(false);
+
     //tRect_->update();
 }
 
